@@ -1,9 +1,9 @@
 body {
-  background: url("/images/5.jpg") no-repeat center center/cover;
+  background: url("/images/4.jpg") no-repeat center center/cover;
   min-height: 100vh;
 }
 body.singleBlog {
-  background: url("/images/4.jpg") no-repeat center center/cover;
+  background: url("/images/6.jpg") no-repeat center center/cover;
 }
 
 nav form .input-group input {
@@ -11,6 +11,10 @@ nav form .input-group input {
 }
 nav form .input-group input::placeholder {
   color: white !important;
+}
+
+main {
+  padding-top: 150px !important;
 }
 
 #trashcan:hover,

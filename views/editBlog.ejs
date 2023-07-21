@@ -6,23 +6,56 @@
     <main>
         <section class="py-5">
             <div class="container-lg text-light">
-                <form action="/blogs/<%= blog._id %>" method="POST">
+                <form>
                     <div class="row mb-4">
-                        <input type="text" name="title" class="form-control fw-bold display-3" value="<%= blog.title %>">
+                        <input type="text" name="title" class="form-control fw-bold display-3" id="title" value="<%= blog.title %>">
                     </div>
                     <div class="row mb-4">
-                         <input type="text" name="author" class="form-control fw-bold h5" value="<%= blog.author %>">
+                         <input type="text" name="author" class="form-control fw-bold h5" id="author" value="<%= blog.author %>">
                     </div>
                     <div class="row mb-4">
-                        <textarea name="body" cols="30" rows="7" class="form-control lead lg-lg" value=""><%= blog.body %></textarea>
+                        <textarea name="body" cols="30" rows="7" class="form-control lead lg-lg" id="body" value=""><%= blog.body %></textarea>
                     </div>
                     <div class="row mb-4">
-                        <button class="btn btn-light btn-block btn-lg py-3">Done Editing</button>
+                        <button class="btn btn-light btn-block btn-lg py-3" id="doneEdit" data-url="<%= blog._id %>">Done Editing</button>
                     </div>
                 </form>
             </div>
         </section>
     </main>
     <%- include('./partials/footer.ejs') %>
+    <script>
+        const doneButton = document.getElementById('doneEdit');
+        const form = document.querySelector('form');
+        const endpointURL = `/blogs/${doneButton.dataset.url}`;
+
+        form.addEventListener('submit', event => {
+            event.preventDefault();
+        });
+
+        const editBlog = async () => {
+            try {
+                 const result = await fetch(endpointURL, {
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        title: document.getElementById('title').value,
+                        author: document.getElementById('author').value,
+                        body: document.getElementById('body').value,
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                });
+                const data = await result.json();
+                window.location.href = data.redirect;
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        doneButton.addEventListener('click', event => {
+            event.preventDefault();
+            editBlog();
+        })
+    </script>
 </body>
 </html>

@@ -21,20 +21,66 @@
         </section>
         <section class="py-5">
             <div class="container-lg text-light">
-                <h1 class="mb-5">Lastest Blogs</h1>
+                <div class="d-flex justify-content-between">
+                    <h1 class="mb-5">Lastest Blogs</h1>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link text-light" id="prev" href="#">Previous</a></li>
+                            <% for( let i = 0; i < blogPages; i++ ) { %>
+                                <li class="page-item"><a class="page-link text-light" href="/blogs?page=<%= i %>"><%= i + 1 %></a></li>
+                            <% } %>
+                            <li class="page-item"><a class="page-link text-light" id="next" href="#">Next</a></li>
+                        </ul>
+                      </nav>
+                </div>
                 <% blogs.forEach(blog => { %>
                     <div class="row py-3 border-bottom border-2 border-light align-items-baseline">
                         <div class="col-9 text-start lead">
                             <a href="/blogs/<%= blog._id %>" class="text-light text-decoration-none"><%= blog.title %></a>
                         </div>
                         <div class="col-3 text-end opacity-50">
-                            <a href="/blogs/<%= blog._id %>" class="text-light text-decoration-none"><%= blog.createdAt.toLocaleDateString('en-GB') %></a>
+                            <a href="/blogs/<%= blog._id %>" class="text-light text-decoration-none"><%= blog.updatedAt.toLocaleDateString('en-GB') %></a>
                         </div>
                     </div>
                 <% }) %>
+                <a href="" class="mt-4 d-inline-block text-muted text-decoration-none" id="olderPosts">
+                    <i class="bi bi-chevron-left"></i>
+                    <span class="lead">View Older Posts</span>
+                </a>
             </div>
         </section>
     </main>
     <%- include('./partials/footer.ejs') %>
+    <script>
+        const prev = document.getElementById('prev');
+        const next = document.getElementById('next');
+        const olderPosts = document.getElementById('olderPosts');
+
+        const goOlderPosts = () => {
+            const loca = window.location.href;
+            if (!loca.includes('page')) {
+                let i = 1;
+                return `/blogs?page=${i}`;
+            } else {
+                let i = +loca.charAt(loca.length - 1) + 1;
+                return `/blogs?page=${i}`;
+            }
+        };
+        const goNewerPosts = () => {
+            const loca = window.location.href;
+            let i = +loca.charAt(loca.length - 1) - 1;
+            return `/blogs?page=${i}`;
+        }
+
+        prev.onclick = () => {
+            prev.href = goNewerPosts();
+        };
+        next.onclick = () => {
+            next.href = goOlderPosts();
+        };
+        olderPosts.onclick = () => {
+            olderPosts.href = goOlderPosts();
+        };
+    </script>
 </body>
 </html>
