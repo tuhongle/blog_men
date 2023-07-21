@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+<body class="singleBlog">
+    <%- include('./partials/nav.ejs') %>
+    <main>
+        <section class="py-5">
+            <div class="container-lg text-light">
+                <form action="/blogs/<%= blog._id %>" method="POST">
+                    <div class="row mb-4">
+                        <input type="text" name="title" class="form-control fw-bold display-3" value="<%= blog.title %>">
+                    </div>
+                    <div class="row mb-4">
+                         <input type="text" name="author" class="form-control fw-bold h5" value="<%= blog.author %>">
+                    </div>
+                    <div class="row mb-4">
+                        <textarea name="body" cols="30" rows="7" class="form-control lead lg-lg" value=""><%= blog.body %></textarea>
+                    </div>
+                    <div class="row mb-4">
+                        <button class="btn btn-light btn-block btn-lg py-3">Done Editing</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>

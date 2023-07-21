@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <main class="home-background">
+        <section class="py-5">
+            <div class="container-lg">
+                <div class="row text-center text-light">
+                    <h1 class="display-3 fw-bold">Hi, I am Tu FIROCT.</h1>
+                    <p class="lead fw-medium my-3">Web Developer, Designer and Pharmacist.</p>
+                </div>
+            </div>
+        </section>
+        <section class="py-5">
+            <div class="container-lg">
+                <div class="row">
+                    <img src="/images/1.jpg" class="img-fluid shadow-lg">
+                </div>
+            </div>
+        </section>
+        <section class="py-5">
+            <div class="container-lg text-light">
+                <h1 class="mb-5">Lastest Blogs</h1>
+                <% blogs.forEach(blog => { %>
+                    <div class="row py-3 border-bottom border-2 border-light align-items-baseline">
+                        <div class="col-9 text-start lead">
+                            <a href="/blogs/<%= blog._id %>" class="text-light text-decoration-none"><%= blog.title %></a>
+                        </div>
+                        <div class="col-3 text-end opacity-50">
+                            <a href="/blogs/<%= blog._id %>" class="text-light text-decoration-none"><%= blog.createdAt.toLocaleDateString('en-GB') %></a>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </section>
+    </main>
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>
